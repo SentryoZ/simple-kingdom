@@ -1,0 +1,10 @@
+name: simple-kingdom
+version: '1.0-SNAPSHOT'
+main: me.sentryozvn.simpleKingdom.SimpleKingdom
+api-version: '1.21'
+depend: [PlaceholderAPI]
+commands:
+  kingdom:
+    description: "Kingdom command"
+    usage: "/kingdom"
+    aliases: [k]

@@ -1,0 +1,17 @@
+kingdoms:
+  rineian:
+    name: "Rineian Dynasty"
+    tag: "&b[Rineian]"
+    permission: "kingdom.rineian"
+  phasan:
+    name: "Phasan Empire"
+    tag: "&e[Phasan]"
+    permission: "kingdom.phasan"
+  truffaegon:
+    name: "Truffaegon Kingdom"
+    tag: "&c[Truffaegon]"
+    permission: "kingdom.truffaegon"
+
+settings:
+  max_deviation: 5
+  auto_save_interval: 20
