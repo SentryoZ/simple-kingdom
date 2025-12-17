@@ -1,9 +1,11 @@
 package me.sentryozvn.simpleKingdom;
 
 import me.sentryozvn.simpleKingdom.model.Kingdom;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +21,13 @@ public class KingdomManager {
     private int maxDeviation;
     private final File dataFile;
     private final FileConfiguration dataConfig;
+    private final PermissionManager permissionManager;
 
     public KingdomManager(SimpleKingdom plugin) {
         this.plugin = plugin;
         this.dataFile = new File(plugin.getDataFolder(), "data.yml");
         this.dataConfig = YamlConfiguration.loadConfiguration(dataFile);
+        this.permissionManager = plugin.getPermissionManager();
         loadKingdoms();
         loadData();
     }
@@ -96,18 +100,26 @@ public class KingdomManager {
         return getPlayerKingdom(player) != null;
     }
 
-    public void joinKingdom(UUID player, Kingdom kingdom) {
-        if (isPlayerInKingdom(player)) {
+    public void joinKingdom(UUID playerUUID, Kingdom kingdom) {
+        if (isPlayerInKingdom(playerUUID)) {
             return;
         }
-        kingdom.addMember(player);
+        kingdom.addMember(playerUUID);
+        Player player = Bukkit.getPlayer(playerUUID);
+        if (player != null) {
+            permissionManager.addPermission(player, kingdom.getPermission());
+        }
         saveData();
     }
 
-    public void leaveKingdom(UUID player) {
-        Kingdom kingdom = getPlayerKingdom(player);
+    public void leaveKingdom(UUID playerUUID) {
+        Kingdom kingdom = getPlayerKingdom(playerUUID);
         if (kingdom != null) {
-            kingdom.removeMember(player);
+            kingdom.removeMember(playerUUID);
+            Player player = Bukkit.getPlayer(playerUUID);
+            if (player != null) {
+                permissionManager.removePermission(player, kingdom.getPermission());
+            }
             saveData();
         }
     }

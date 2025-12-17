@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
-import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +19,13 @@ public class KingdomTabCompleter implements TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(@NonNull CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return StringUtil.copyPartialMatches(args[0], Arrays.asList("join", "leave", "list", "info"), new ArrayList<>());
+            List<String> subcommands = new ArrayList<>(Arrays.asList("join", "leave", "list", "info"));
+            if (sender.hasPermission("kingdom.reload")) {
+                subcommands.add("reload");
+            }
+            return StringUtil.copyPartialMatches(args[0], subcommands, new ArrayList<>());
         }
 
         if (args.length == 2 && (args[0].equalsIgnoreCase("join") || args[0].equalsIgnoreCase("info"))) {

@@ -15,3 +15,4 @@ kingdoms:
 settings:
   max_deviation: 5
   auto_save_interval: 20
+  permission_check_interval: 5

@@ -2,9 +2,13 @@ name: SimpleKingdom
 version: '1.0-SNAPSHOT'
 main: me.sentryozvn.simpleKingdom.SimpleKingdom
 api-version: '1.21'
-depend: [PlaceholderAPI]
+depend: [PlaceholderAPI, Vault]
 commands:
   kingdom:
     description: "Kingdom command"
     usage: "/kingdom"
     aliases: [k]
+permissions:
+  kingdom.reload:
+    description: "Allows reloading the plugin's configuration."
+    default: op

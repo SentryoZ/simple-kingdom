@@ -10,19 +10,32 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class KingdomCommand implements CommandExecutor {
 
+    private final SimpleKingdom plugin;
     private final KingdomManager kingdomManager;
     private final Lang lang;
 
     public KingdomCommand(SimpleKingdom plugin) {
+        this.plugin = plugin;
         this.kingdomManager = plugin.getKingdomManager();
         this.lang = plugin.getLang();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+            if (!sender.hasPermission("kingdom.reload")) {
+                sender.sendMessage(lang.get("no_permission"));
+                return true;
+            }
+            plugin.reload();
+            sender.sendMessage(lang.get("reload_success"));
+            return true;
+        }
+
         if (!(sender instanceof Player)) {
             sender.sendMessage(lang.get("only_players"));
             return true;
