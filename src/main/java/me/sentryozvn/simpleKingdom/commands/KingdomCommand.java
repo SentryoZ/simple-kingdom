@@ -2,30 +2,33 @@ package me.sentryozvn.simpleKingdom.commands;
 
 import me.sentryozvn.simpleKingdom.KingdomManager;
 import me.sentryozvn.simpleKingdom.Lang;
+import me.sentryozvn.simpleKingdom.PvpManager;
 import me.sentryozvn.simpleKingdom.SimpleKingdom;
 import me.sentryozvn.simpleKingdom.model.Kingdom;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class KingdomCommand implements CommandExecutor {
 
     private final SimpleKingdom plugin;
     private final KingdomManager kingdomManager;
     private final Lang lang;
+    private final PvpManager pvpManager;
 
     public KingdomCommand(SimpleKingdom plugin) {
         this.plugin = plugin;
         this.kingdomManager = plugin.getKingdomManager();
         this.lang = plugin.getLang();
+        this.pvpManager = plugin.getPvpManager();
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             if (!sender.hasPermission("kingdom.reload")) {
                 sender.sendMessage(lang.get("no_permission"));
@@ -36,12 +39,24 @@ public class KingdomCommand implements CommandExecutor {
             return true;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(lang.get("only_players"));
             return true;
         }
 
-        Player player = (Player) sender;
+      if (args.length > 0 && args[0].equalsIgnoreCase("pvp")) {
+            if (!pvpManager.isAllowToggle()) {
+                player.sendMessage(lang.get("pvp_toggle_not_allowed"));
+                return true;
+            }
+            pvpManager.togglePvp(player);
+            if (pvpManager.canPvp(player)) {
+                player.sendMessage(lang.get("pvp_enabled"));
+            } else {
+                player.sendMessage(lang.get("pvp_disabled"));
+            }
+            return true;
+        }
 
         if (args.length == 0) {
             Kingdom playerKingdom = kingdomManager.getPlayerKingdom(player.getUniqueId());

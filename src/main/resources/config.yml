@@ -16,3 +16,6 @@ settings:
   max_deviation: 5
   auto_save_interval: 20
   permission_check_interval: 5
+  pvp:
+    friendly_fire: false
+    allow_toggle: true

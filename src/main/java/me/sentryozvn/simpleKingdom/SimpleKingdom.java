@@ -14,6 +14,7 @@ public final class SimpleKingdom extends JavaPlugin {
     private KingdomManager kingdomManager;
     private Lang lang;
     private PermissionManager permissionManager;
+    private PvpManager pvpManager;
     private BukkitTask autoSaveTask;
     private BukkitTask permissionCheckTask;
 
@@ -45,6 +46,7 @@ public final class SimpleKingdom extends JavaPlugin {
         lang = new Lang(this);
         permissionManager = new PermissionManager(this);
         kingdomManager = new KingdomManager(this);
+        pvpManager = new PvpManager(this);
         getCommand("kingdom").setExecutor(new KingdomCommand(this));
         getCommand("kingdom").setTabCompleter(new KingdomTabCompleter(this));
 
@@ -88,5 +90,9 @@ public final class SimpleKingdom extends JavaPlugin {
 
     public PermissionManager getPermissionManager() {
         return permissionManager;
+    }
+
+    public PvpManager getPvpManager() {
+        return pvpManager;
     }
 }
