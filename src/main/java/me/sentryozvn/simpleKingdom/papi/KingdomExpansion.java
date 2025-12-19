@@ -52,6 +52,15 @@ public class KingdomExpansion extends PlaceholderExpansion {
             return kingdom != null ? String.valueOf(kingdom.getMemberCount()) : "0";
         }
 
+        if (params.startsWith("can_join_")) {
+            String kingdomName = params.substring(9);
+            Kingdom kingdom = plugin.getKingdomManager().getKingdom(kingdomName);
+            if (kingdom != null) {
+                return String.valueOf(plugin.getKingdomManager().canJoinKingdom(player.getUniqueId(), kingdom));
+            }
+            return "false";
+        }
+
         return null;
     }
 }

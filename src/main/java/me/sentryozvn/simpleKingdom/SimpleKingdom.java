@@ -43,6 +43,8 @@ public final class SimpleKingdom extends JavaPlugin {
     private void setup() {
         saveDefaultConfig();
         reloadConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         lang = new Lang(this);
         permissionManager = new PermissionManager(this);
         kingdomManager = new KingdomManager(this);

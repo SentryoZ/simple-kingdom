@@ -132,4 +132,8 @@ public class KingdomManager {
         int averageMembers = kingdoms.isEmpty() ? 0 : totalPlayers / kingdoms.size();
         return targetKingdom.getMemberCount() > averageMembers + maxDeviation;
     }
+
+    public boolean canJoinKingdom(UUID playerUUID, Kingdom kingdom) {
+        return !isPlayerInKingdom(playerUUID) && !isKingdomFull(kingdom);
+    }
 }
