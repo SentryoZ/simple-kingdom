@@ -18,10 +18,10 @@ public class KingdomManager {
 
     private final SimpleKingdom plugin;
     private final Map<String, Kingdom> kingdoms = new HashMap<>();
-    private int maxDeviation;
     private final File dataFile;
     private final FileConfiguration dataConfig;
     private final PermissionManager permissionManager;
+    private int maxDeviation;
 
     public KingdomManager(SimpleKingdom plugin) {
         this.plugin = plugin;

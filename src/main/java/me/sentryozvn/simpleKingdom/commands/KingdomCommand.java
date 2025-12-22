@@ -44,7 +44,7 @@ public class KingdomCommand implements CommandExecutor {
             return true;
         }
 
-      if (args.length > 0 && args[0].equalsIgnoreCase("pvp")) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("pvp")) {
             if (!pvpManager.isAllowToggle()) {
                 player.sendMessage(lang.get("pvp_toggle_not_allowed"));
                 return true;
